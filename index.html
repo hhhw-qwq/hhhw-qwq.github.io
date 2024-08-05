@@ -20,6 +20,7 @@
             display: flex;
             flex-direction: column;
             min-height: 100vh;
+            overflow: hidden; /* 防止滚动 */
         }
 
         header,
@@ -72,6 +73,24 @@
             margin: 20px 0;
             font-family: 'MiSans', sans-serif;
         }
+
+        /* 全屏图片样式 */
+        .fullscreen-image {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background-size: cover;
+            background-position: center;
+            z-index: 1000;
+            display: none; /* 默认隐藏 */
+        }
+
+        /* 隐藏网页内容 */
+        .hidden {
+            display: none;
+        }
     </style>
 </head>
 
@@ -83,27 +102,66 @@
         </div>
     </header>
     <main>
-        <img id="main-image" src="https://pic.imgdb.cn/item/66b08350d9c307b7e938469e.png" alt="pic">
+        <img id="main-image" src="https://pic.imgdb.cn/item/66b08623d9c307b7e93c30e3.png" alt="pic">
     </main>
     <footer>
         <div class="footer-content">
             <p>Copyright hhhw_qwq &copy; 2024, All Rights Reserved.</p>
         </div>
     </footer>
+    <div id="fullscreen-image" class="fullscreen-image"></div>
 
     <script>
+        function getLanguage() {
+            return navigator.language.startsWith('zh') ? 'zh' : 'en';
+        }
+
+        function updateImage() {
+            const img = document.getElementById('main-image');
+            const language = getLanguage();
+            let imageSrc = '';
+
+            if (language === 'en') {
+                imageSrc = 'https://pic.imgdb.cn/item/66b08623d9c307b7e93c30e3.png';
+            } else if (language === 'zh') {
+                imageSrc = 'https://pic.imgdb.cn/item/66b08350d9c307b7e938469e.png';
+            }
+
+            img.src = imageSrc;
+        }
+
         function switchLanguage(lang) {
-            const mainImage = document.getElementById('main-image');
             if (lang === 'en') {
                 alert('Language switched to English');
-                mainImage.src = 'https://pic.imgdb.cn/item/66b08623d9c307b7e93c30e3.png';
-                mainImage.alt = 'en';
             } else if (lang === 'zh') {
                 alert('语言切换到中文');
-                mainImage.src = 'https://pic.imgdb.cn/item/66b08350d9c307b7e938469e.png';
-                mainImage.alt = 'zh';
+            }
+            updateImage(); // 更新图片
+        }
+
+        function checkOrientation() {
+            const fullscreenImage = document.getElementById('fullscreen-image');
+            const isPortrait = window.matchMedia("(orientation: portrait)").matches;
+
+            if (isPortrait) {
+                fullscreenImage.style.backgroundImage = 'url(https://pic.imgdb.cn/item/66b0a2b6d9c307b7e9598859.png)'; // 竖屏全屏图片 URL
+                fullscreenImage.style.display = 'block'; // 显示全屏图片
+                document.querySelector('header').classList.add('hidden');
+                document.querySelector('main').classList.add('hidden');
+                document.querySelector('footer').classList.add('hidden');
+                document.body.style.overflow = 'hidden'; // 禁止滚动
+            } else {
+                fullscreenImage.style.display = 'none'; // 隐藏全屏图片
+                document.querySelector('header').classList.remove('hidden');
+                document.querySelector('main').classList.remove('hidden');
+                document.querySelector('footer').classList.remove('hidden');
+                document.body.style.overflow = 'auto'; // 允许滚动
             }
         }
+
+        // 页面加载时和窗口尺寸改变时更新屏幕方向
+        window.addEventListener('load', checkOrientation);
+        window.addEventListener('resize', checkOrientation);
     </script>
 </body>
 
