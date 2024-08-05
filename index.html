@@ -112,31 +112,24 @@
     <div id="fullscreen-image" class="fullscreen-image"></div>
 
     <script>
-        function getLanguage() {
-            return navigator.language.startsWith('zh') ? 'zh' : 'en';
+        let currentLanguage = 'en';
+
+        function switchLanguage(lang) {
+            currentLanguage = lang;
+            updateImage(); // 更新图片
         }
 
         function updateImage() {
-            const img = document.getElementById('main-image');
-            const language = getLanguage();
-            let imageSrc = '';
+            const mainImage = document.getElementById('main-image');
+            const fullscreenImage = document.getElementById('fullscreen-image');
 
-            if (language === 'en') {
-                imageSrc = 'https://pic.imgdb.cn/item/66b08623d9c307b7e93c30e3.png';
-            } else if (language === 'zh') {
-                imageSrc = 'https://pic.imgdb.cn/item/66b08350d9c307b7e938469e.png';
+            if (currentLanguage === 'en') {
+                mainImage.src = 'https://pic.imgdb.cn/item/66b08623d9c307b7e93c30e3.png';
+                fullscreenImage.style.backgroundImage = 'url(https://pic.imgdb.cn/item/66b0a2b6d9c307b7e9598859.png)'; // 竖屏全屏图片 URL for English
+            } else if (currentLanguage === 'zh') {
+                mainImage.src = 'https://pic.imgdb.cn/item/66b08350d9c307b7e938469e.png';
+                fullscreenImage.style.backgroundImage = 'url(https://pic.imgdb.cn/item/66b0a2b6d9c307b7e9598859.png)'; // 竖屏全屏图片 URL for 中文
             }
-
-            img.src = imageSrc;
-        }
-
-        function switchLanguage(lang) {
-            if (lang === 'en') {
-                alert('Language switched to English');
-            } else if (lang === 'zh') {
-                alert('语言切换到中文');
-            }
-            updateImage(); // 更新图片
         }
 
         function checkOrientation() {
@@ -144,7 +137,6 @@
             const isPortrait = window.matchMedia("(orientation: portrait)").matches;
 
             if (isPortrait) {
-                fullscreenImage.style.backgroundImage = 'url(https://pic.imgdb.cn/item/66b0a2b6d9c307b7e9598859.png)'; // 竖屏全屏图片 URL
                 fullscreenImage.style.display = 'block'; // 显示全屏图片
                 document.querySelector('header').classList.add('hidden');
                 document.querySelector('main').classList.add('hidden');
@@ -160,7 +152,10 @@
         }
 
         // 页面加载时和窗口尺寸改变时更新屏幕方向
-        window.addEventListener('load', checkOrientation);
+        window.addEventListener('load', () => {
+            updateImage();
+            checkOrientation();
+        });
         window.addEventListener('resize', checkOrientation);
     </script>
 </body>
