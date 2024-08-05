@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>hhhw_qwq</title>
+    <style>
+        @font-face {
+            font-family: 'MiSans';
+            src: url('fonts/MiSans-Semibold.ttf') format('truetype');
+            font-weight: normal;
+            font-style: normal;
+        }
+
+        body {
+            font-family: 'Roboto', sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        header,
+        footer {
+            background-color: #f8f8f8;
+            padding: 10px;
+            text-align: center;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        main {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 0;
+            background-color: #f0f0f0;
+        }
+
+        img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border: none;
+            border-radius: 0;
+            box-shadow: none;
+        }
+
+        .language-switch {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .language-switch button {
+            padding: 5px 10px;
+            cursor: pointer;
+            border: none;
+            background-color: #007bff;
+            color: white;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+        }
+
+        .language-switch button:hover {
+            background-color: #0056b3;
+        }
+
+        .footer-content {
+            margin: 20px 0;
+            font-family: 'MiSans', sans-serif;
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <div class="language-switch">
+            <button onclick="switchLanguage('en')">English</button>
+            <button onclick="switchLanguage('zh')">中文</button>
+        </div>
+    </header>
+    <main>
+        <img id="main-image" src="https://pic.imgdb.cn/item/66b08350d9c307b7e938469e.png" alt="pic">
+    </main>
+    <footer>
+        <div class="footer-content">
+            <p>Copyright hhhw_qwq &copy; 2024, All Rights Reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        function switchLanguage(lang) {
+            const mainImage = document.getElementById('main-image');
+            if (lang === 'en') {
+                alert('Language switched to English');
+                mainImage.src = 'https://pic.imgdb.cn/item/66b08623d9c307b7e93c30e3.png';
+                mainImage.alt = 'en';
+            } else if (lang === 'zh') {
+                alert('语言切换到中文');
+                mainImage.src = 'https://pic.imgdb.cn/item/66b08350d9c307b7e938469e.png';
+                mainImage.alt = 'zh';
+            }
+        }
+    </script>
+</body>
+
+</html>
